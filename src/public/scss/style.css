@@ -1,3 +1,9 @@
 .blue {
   color: blue;
 }
+
+.footer {
+  padding: 10px;
+  background-color: #2c2727;
+  color: white;
+}
