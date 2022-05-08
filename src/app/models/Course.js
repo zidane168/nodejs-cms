@@ -9,4 +9,4 @@ const Course = new Schema({
     updatedAt: { type: Date, default: Date.now },
 });
 
-model.exports = mongoose.model('Course', Course)
+model.exports = mongoose.model('Course', Course)    // collections name: courses
