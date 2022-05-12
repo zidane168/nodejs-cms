@@ -1,64 +1,63 @@
-const Course = require('../models/Course')
-const { mongoosesToObject, mongooseToObject } = require('../../util/mongoose');
+const Course = require("../models/Course");
+const { mongoosesToObject, mongooseToObject } = require("../../util/mongoose");
 
 class NewsController {
+  // [GET] /news/
+  index(req, res, next) {
+    Course.find({})
+      .then((courses) => {
+        //courses = courses.map( course => course.toObject()) // convert to Object for remove bug security of handlebars
 
-    // [GET] /news/
-    index(req, res, next) {
+        courses = mongoosesToObject(courses);
+        res.render("news/index", { courses });
+      })
+      .catch(next);
 
-        Course.find({})
-            .then(courses => {
+    // Course.find({}, function (err, courses) {
+    //     if (!err) {
+    //         res.render('news', { courses: courses });
+    //         // res.json(courses);
+    //     } else {
+    //         res.status(400).json({ error: err})
+    //     }
+    // })
+  }
 
-                //courses = courses.map( course => course.toObject()) // convert to Object for remove bug security of handlebars
+  
+  // [GET] /add
+  add(req, res, next) {
+    res.render("news/add");
+  }
+  
+  // [GET] /news/:slug
+  view(req, res, next) {
+    // http://abc.com?key=value&key2=value2 (QUERY)
+    // req.query.key
+    // req.query.key2
 
-                courses = mongoosesToObject(courses)
-                res.render('news/index', { courses })
-            })
-            .catch(next);
+    // http://abc.com (POST)
+    // username. password
+    // req.body.name
+    // req.body.password
 
-        // Course.find({}, function (err, courses) {
-        //     if (!err) {
-        //         res.render('news', { courses: courses });        
-        //         // res.json(courses);
-        //     } else {
-        //         res.status(400).json({ error: err})
-        //     }
-        // })
-      
-    }
+    // http://abc.com/news/:slug (http://abc.com/news/node-js - http://abc.com/news/csharp)
+    // req.params.slug
 
-    // [GET] /news/:slug
-    view(req, res, next) {
+    Course.findOne({ slug: req.params.slug })
+      .then((course) => {
+        // res.json(course);
+        course = mongooseToObject(course);
+        res.render("news/view", { course });
+      })
+      .catch(next);
+  }
 
-        // http://abc.com?key=value&key2=value2 (QUERY)
-        // req.query.key
-        // req.query.key2
 
-        // http://abc.com (POST)
-        // username. password
-        // req.body.name
-        // req.body.password
-
-        // http://abc.com/news/:slug (http://abc.com/news/node-js - http://abc.com/news/csharp)
-        // req.params.slug
-        
-        Course.findOne({ slug: req.params.slug })
-            .then(course => {
-
-                // res.json(course);
-                course = mongooseToObject(course)
-                console.log(course)
-                res.render('news/view', { course })
-            })
-            .catch(next)
-    }
-
-    test(req, res) {
-       
-        res.json({
-            name: 'test'
-        })
-    }
+  test(req, res) {
+    res.json({
+      name: "test",
+    });
+  }
 }
 
-module.exports = new NewsController
+module.exports = new NewsController();
