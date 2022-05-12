@@ -7,3 +7,17 @@
     background-color: rgb(44, 39, 39);
     color: white;
 }
+
+.detail {
+    .left-panel {
+        border-radius: 10px;
+        background-color: aquamarine;
+        min-height: 50vh;
+    }
+
+    .right-panel {
+        border-radius: 10px;
+        background-color: bisque;
+        min-height: 100vh;
+    }
+}

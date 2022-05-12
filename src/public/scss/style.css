@@ -7,3 +7,15 @@
   background-color: #2c2727;
   color: white;
 }
+
+.detail .left-panel {
+  border-radius: 10px;
+  background-color: aquamarine;
+  min-height: 50vh;
+}
+
+.detail .right-panel {
+  border-radius: 10px;
+  background-color: bisque;
+  min-height: 100vh;
+}

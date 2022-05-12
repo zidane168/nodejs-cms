@@ -44,7 +44,10 @@ class NewsController {
         
         Course.findOne({ slug: req.params.slug })
             .then(course => {
+
+                // res.json(course);
                 course = mongooseToObject(course)
+                console.log(course)
                 res.render('news/view', { course })
             })
             .catch(next)
