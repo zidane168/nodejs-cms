@@ -1,15 +1,18 @@
 const Course = require('../models/Course')
+const { mongoosesToObject, mongooseToObject } = require('../../util/mongoose');
 
 class NewsController {
 
-    // [GET] index 
+    // [GET] /news/
     index(req, res, next) {
 
         Course.find({})
             .then(courses => {
 
-                courses = courses.map( course => course.toObject()) // convert to Object for remove bug security of handlebars
-                res.render('news', { courses })
+                //courses = courses.map( course => course.toObject()) // convert to Object for remove bug security of handlebars
+
+                courses = mongoosesToObject(courses)
+                res.render('news/index', { courses })
             })
             .catch(next);
 
@@ -22,6 +25,29 @@ class NewsController {
         //     }
         // })
       
+    }
+
+    // [GET] /news/:slug
+    view(req, res, next) {
+
+        // http://abc.com?key=value&key2=value2 (QUERY)
+        // req.query.key
+        // req.query.key2
+
+        // http://abc.com (POST)
+        // username. password
+        // req.body.name
+        // req.body.password
+
+        // http://abc.com/news/:slug (http://abc.com/news/node-js - http://abc.com/news/csharp)
+        // req.params.slug
+        
+        Course.findOne({ slug: req.params.slug })
+            .then(course => {
+                course = mongooseToObject(course)
+                res.render('news/view', { course })
+            })
+            .catch(next)
     }
 
     test(req, res) {
