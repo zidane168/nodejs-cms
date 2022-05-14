@@ -1,23 +1,35 @@
+html .body {
+  min-height: calc(100vh - 170px);
+}
+
 .blue {
-    color: blue;
+  color: blue;
 }
 
 .footer {
-    padding: 10px;
-    background-color: rgb(44, 39, 39);
-    color: white;
+  padding: 10px;
+  background-color: rgb(44, 39, 39);
+  color: white;
 }
 
 .detail {
-    .left-panel {
-        border-radius: 10px;
-        background-color: aquamarine;
-        min-height: 50vh;
-    }
+  .left-panel {
+    border-radius: 10px;
+    background-color: aquamarine;
+    min-height: 50vh;
+  }
 
-    .right-panel {
-        border-radius: 10px;
-        background-color: bisque;
-        min-height: 100vh;
-    }
+  .right-panel {
+    border-radius: 10px;
+    background-color: bisque;
+    min-height: 100vh;
+  }
+}
+
+.footer {
+  position: relative;
+  left: 0;
+  right: 0px;
+  bottom: 0;
+  z-index: 1;
 }

@@ -7,21 +7,78 @@
 
 <div class="row">
     {{#each courses}}
-        <div class="col-4 mt-4">
-            <div class="card" style="width: 18rem;">
-                <a href="/news/:{{ this.slug }}">
-                    <img class="card-img-top" style="max-height: 150px" src={{ this.image }} alt={{ this.name }}>
+    <div class="col-4 mt-4">
+        <div class="card" style="width: 18rem;">
+            <a href="/news/:{{ this.slug }}">
+                <img class="card-img-top" style="max-height: 150px" src={{ this.image }} alt={{ this.name }}>
+            </a>
+            <div class="card-body">
+                <a href="/news/{{ this.slug }}">
+                    <h5 class="card-title">{{ this.name }}</h5>
                 </a>
-                <div class="card-body">
-                    <a href="/news/{{ this.slug }}">
-                        <h5 class="card-title">{{ this.name }}</h5>
-                    </a>
-                    <h6 class="card-text">{{ this.slug }}</h6>
-                    <p class="card-text">{{ this.description }}.</p>
-                    <a href="/news/{{ this._id }}/edit" role="button" class="btn btn-warning"> Update </a>
-                    <a href="#" role="button" class="btn btn-danger"> Delete </a>
-                </div>
+                <h6 class="card-text">{{ this.slug }}</h6>
+                <p class="card-text">{{ this.description }}.</p>
+                <a href="/news/{{ this._id }}/edit" role="button" class="btn btn-warning"> Update </a>
+                <a role="button" class="btn btn-danger" data-toggle="modal" data-id="{{ this._id }}"
+                    data-name="{{ this.name }}" data-target="#deleteModal"> Delete </a>
             </div>
         </div>
+    </div>
     {{/each}}
 </div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">CMS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="message"> Do you want to delete? </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnDeleted"> Delete </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- hidden form delete -->
+<form id="deleteForm" method="POST" action="/news/:id?_method=DELETE"></form>
+
+<script>
+
+   // $(document).ready(function () {}); //wrong
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+        let courseId;
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            const button = $(event.relatedTarget) // Button that triggered the modal
+            courseId = button.data('id')
+            const name = button.data('name')
+
+            // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            const modal = $(this)
+            modal.find('.modal-body .message').text('Would you want to delete course: ' + name + '?')
+        })
+        
+        let deleteForm = document.forms['deleteForm'];
+        
+        const btnDeleted = document.getElementById("btnDeleted")
+        btnDeleted.onclick = function() {
+
+            deleteForm.action = `/news/${courseId}?_method=DELETE`
+            deleteForm.submit();
+        }
+    })
+
+</script>

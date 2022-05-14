@@ -1,3 +1,7 @@
+html .body {
+  min-height: calc(100vh - 170px);
+}
+
 .blue {
   color: blue;
 }
@@ -18,4 +22,12 @@
   border-radius: 10px;
   background-color: bisque;
   min-height: 100vh;
+}
+
+.footer {
+  position: relative;
+  left: 0;
+  right: 0px;
+  bottom: 0;
+  z-index: 1;
 }
