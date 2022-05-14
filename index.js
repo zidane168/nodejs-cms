@@ -10,12 +10,17 @@ const bodyParser = require("body-parser");
 const db = require('./src/config/db')
 
 
+const methodOverride = require('method-override')
+
 const route = require('./src/routes')
 
 //connect to db
 db.connect();
 
 const app = express();
+
+// override method for POST -> PUT (update form)
+app.use(methodOverride('_method'))
 
 // Handles post requests
 app.use(bodyParser.urlencoded({ extended : true}))

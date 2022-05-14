@@ -5,7 +5,11 @@ const newsController = require('../app/controllers/NewsController')
 router.get('/', newsController.index)
 
 router.get('/add',      newsController.add)
-router.post('/store',    newsController.store)
+router.post('/add',     newsController.add)
+
+router.get('/:id/edit',     newsController.edit)
+router.put('/:id',          newsController.edit)
+
 router.get('/:slug',    newsController.view)
 
 module.exports = router
