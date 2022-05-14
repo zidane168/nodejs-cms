@@ -3,6 +3,10 @@ const path = require("path");
 const morgan = require("morgan");
 const { engine } = require("express-handlebars");
 
+// create application/json parser (POST -> req.body)
+// Handles post requests
+const bodyParser = require("body-parser");
+
 const db = require('./src/config/db')
 
 
@@ -11,13 +15,17 @@ const route = require('./src/routes')
 //connect to db
 db.connect();
 
-
 const app = express();
 
+// Handles post requests
+app.use(bodyParser.urlencoded({ extended : true}))
+
+// Handles route
 route(app);
 
 const port = 3000;
 
+// Handles layouts hbs
 app.engine(
   ".hbs",
   engine({
@@ -32,11 +40,9 @@ app.set("views", path.join(__dirname, "/src/resources/views"));
 // fix Cannot GET /src/public/scss/style.scss
 app.use(express.static(path.join(__dirname + '/src/public')));
 
-
-
 // http logger
-app.use(morgan("combined"));
-
+// app.use(morgan("combined"));
+app.use(morgan("tiny"))
 
 app.get("/learn-tech-tips", (req, res) => {
   res.send(`

@@ -1,5 +1,6 @@
 const Course = require("../models/Course");
 const { mongoosesToObject, mongooseToObject } = require("../../util/mongoose");
+const { redirect } = require("express/lib/response");
 
 class NewsController {
   // [GET] /news/
@@ -13,20 +14,25 @@ class NewsController {
       })
       .catch(next);
 
-    // Course.find({}, function (err, courses) {
-    //     if (!err) {
-    //         res.render('news', { courses: courses });
-    //         // res.json(courses);
-    //     } else {
-    //         res.status(400).json({ error: err})
-    //     }
-    // })
+      // res.status(400).json({ error: err})
   }
-
   
-  // [GET] /add
+  // [GET] /news/add
   add(req, res, next) {
     res.render("news/add");
+  }
+
+  // [POST] /news/store
+  store(req, res, next) {
+    let fromData = req.body;
+    
+    fromData.image = 'https://static.remove.bg/remove-bg-web/a8b5118d623a6b3f4b7813a78c686de384352145/assets/start_remove-c851bdf8d3127a24e2d137a55b1b427378cd17385b01aec6e59d5d4b5f39d2ec.png'
+    
+    const course = new Course(fromData);
+    course.save()
+          .then(() => res.redirect(`/news/`))
+          .catch(error => next(error))
+    
   }
   
   // [GET] /news/:slug
@@ -51,7 +57,6 @@ class NewsController {
       })
       .catch(next);
   }
-
 
   test(req, res) {
     res.json({
