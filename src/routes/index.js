@@ -1,12 +1,12 @@
-const newsRouter = require("./news");
+const productRouter = require("./product");
 
 function route(app) {
-  app.use("/news", newsRouter);
+  app.use("/product", productRouter);
 
   app.get("/", (req, res) => {
     res.render("index", {
-      title: "Learn Tech Tips",
-      message: "Welcome to Blog spot Learn Tech Tips",
+      title: "Learn Tech Tips - Zidane",
+      message: "Welcome to CMS",
     });
   });
 
