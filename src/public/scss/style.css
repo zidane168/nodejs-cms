@@ -31,3 +31,7 @@ html .body {
   bottom: 0;
   z-index: 1;
 }
+
+.p-10 {
+  padding: 10px;
+}
