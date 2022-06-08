@@ -19,11 +19,10 @@ class ProductController {
   add(req, res, next) {
     if (req.method === "POST") {
       let fromData = { ...req.body };
-      fromData.image =
-        "https://static.remove.bg/remove-bg-web/a8b5118d623a6b3f4b7813a78c686de384352145/assets/start_remove-c851bdf8d3127a24e2d137a55b1b427378cd17385b01aec6e59d5d4b5f39d2ec.png";
-
-      const course = new Product(fromData);
-      course
+      
+      
+      const product = new Product(fromData);
+      product
         .save()
         .then(() => {
           // toast.show({title: 'Data is save', position: 'topright', type: 'info'})
