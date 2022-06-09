@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
 const { mongoosesToObject, mongooseToObject } = require("../../util/mongoose");
+const ProductType = require("../models/ProductType");
 
 class ProductController {
   // [GET] /product/
@@ -30,7 +31,9 @@ class ProductController {
         })
         .catch((error) => next(error));
     } else {
-      res.render("product/add");
+
+      productTypes = 
+      res.render("product/add", { productTypes } );
     }
   }
 
