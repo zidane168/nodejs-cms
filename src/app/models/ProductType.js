@@ -3,7 +3,16 @@ const { mongoose } = require("mongoose");
 const Schema = mongoose.Schema
 
 const ProductType = new Schema({ 
-    name: { type: Number },  
+    name: { 
+        eng: {
+            type: String,
+            default: '',
+        },
+        zhHK: {
+            type: String,
+            default: '',
+        }
+    },  
 }, {
     timestamps: true, // tu dong tao createdAt, updatedAt
 });
