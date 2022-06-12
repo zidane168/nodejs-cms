@@ -1,19 +1,31 @@
-const Product = require("../models/Product");
-const { mongoosesToObject, mongooseToObject } = require("../../util/mongoose");
-const ProductType = require("../models/ProductType");
+const db  = require('./../../config/db2')
+
 
 class ProductController {
   // [GET] /product/
   index(req, res, next) {
-    Product.find({})
-      .then((products) => {
-       
-        products = mongoosesToObject(products);
-        res.render("product/index", { products });
-      })
-      .catch(next);
 
-    // res.status(400).json({ error: err})
+    let params = [];
+   
+    db.query('SELECT * FROM "public"."Products"', (err, res) => {
+      if (!err) {
+        console.log(res.rows)
+
+      } else {
+        console.log(err.message)
+      }
+
+      db.end
+    })
+    // Product.find({})
+    //   .then((products) => {
+       
+    //     products = mongoosesToObject(products);
+    //     res.render("product/index", { products });
+    //   })
+    //   .catch(next);
+
+    // // res.status(400).json({ error: err})
   }
 
   // [GET/POST] /product/add
